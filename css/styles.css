@@ -92,3 +92,12 @@ tbody tr:nth-child(odd)
     height: 2rem;
     width: 2rem;
 }
+.input-error{
+    border: 2px solid red !important;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
