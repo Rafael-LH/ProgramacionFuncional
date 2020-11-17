@@ -4,16 +4,26 @@
   const carbs = document.getElementById('carbs');
   const protein = document.getElementById('protein');
   const containerInputs = [description, calories, carbs, protein];
+  let list = []
 
   const errorClass = (element) => element.value ? element.classList.remove('input-error') : element.classList.add('input-error')
+  const addErrorsInput = () => containerInputs.forEach(item => errorClass(item))
+  const cleanInputsSubmit = () => containerInputs.forEach(item => item.value = '')
 
-  const addErrorsInput = () => {
-    containerInputs.forEach(item => errorClass(item))
+  const addProduct = () => {
+    const newProducts = {
+      description: description.value,
+      calories: parseInt(calories.value),
+      carbs: parseInt(carbs.value),
+      protein: parseInt(protein.value)
+    }
+    list.push(newProducts)
   }
   const formCalories = () => {
-
     if (description.value && calories.value && carbs.value && protein.value) {
-      const form = new FormData(document.getElementById('form'))
+      addProduct()
+      cleanInputsSubmit()
+      console.log(list);
     } else {
       addErrorsInput()
     }
