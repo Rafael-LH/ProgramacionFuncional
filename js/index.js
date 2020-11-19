@@ -26,13 +26,27 @@
       addProduct()
       cleanInputsSubmit()
       printTableList()
-      console.log(list);
+      caloriesCounter()
     } else {
       addErrorsInput()
     }
   }
   document.getElementById('btn-add').addEventListener('click', formCalories)
+  const caloriesCounter = () => {
+    const total = document.getElementById('total')
+    let values = {}
+    values = list.reduce((acc, cvalue) => {
+      return {
+        calories: acc.calories += cvalue.calories,
+        carbs: acc.carbs += cvalue.carbs,
+        protein: acc.protein += cvalue.protein,
+      }
+    }, { calories: 0, carbs: 0, protein: 0 })
 
+    total.children[1].textContent = values.calories
+    total.children[2].textContent = values.carbs
+    total.children[3].textContent = values.protein
+  }
   const printTableList = () => {
     table.innerHTML = `
           <tr>
