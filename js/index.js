@@ -42,10 +42,7 @@
         protein: acc.protein += cvalue.protein,
       }
     }, { calories: 0, carbs: 0, protein: 0 })
-
-    total.children[1].textContent = values.calories
-    total.children[2].textContent = values.carbs
-    total.children[3].textContent = values.protein
+    Object.values(values).forEach((item, index) => total.children[index + 1].textContent = item)
   }
   const printTableList = () => {
     table.innerHTML = `
@@ -56,7 +53,7 @@
             <th>Protein</th>
           </tr>
         `
-    if (list.length >= 1) {
+    if (list.length > 0) {
       list.forEach(item => {
         table.innerHTML += `
         <tr>
