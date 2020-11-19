@@ -101,3 +101,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.content-table tr:nth-child(2n+1){
+    background-color: #fff;
+}
