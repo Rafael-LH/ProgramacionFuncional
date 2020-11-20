@@ -5,7 +5,6 @@
   const protein = document.getElementById('protein');
   const containerInputs = [description, calories, carbs, protein];
   let list = []
-  const table = document.getElementById('table')
 
   const errorClass = (element) => element.value ? element.classList.remove('input-error') : element.classList.add('input-error')
   const addErrorsInput = () => containerInputs.forEach(item => errorClass(item))
@@ -34,8 +33,7 @@
   document.getElementById('btn-add').addEventListener('click', formCalories)
   const caloriesCounter = () => {
     const total = document.getElementById('total')
-    let values = {}
-    values = list.reduce((acc, cvalue) => {
+    const values = list.reduce((acc, cvalue) => {
       return {
         calories: acc.calories += cvalue.calories,
         carbs: acc.carbs += cvalue.carbs,
@@ -45,26 +43,16 @@
     Object.values(values).forEach((item, index) => total.children[index + 1].textContent = item)
   }
   const printTableList = () => {
-    table.innerHTML = `
-          <tr>
-            <th>Description</th>
-            <th>Calories</th>
-            <th>Carbs</th>
-            <th>Protein</th>
-          </tr>
-        `
-    if (list.length > 0) {
-      list.forEach(item => {
-        table.innerHTML += `
-        <tr>
-          <td>${item.description}</td>
-          <td>${item.calories}</td>
-          <td>${item.carbs}</td>
-          <td>${item.protein}</td>
-        </tr>
-        `
-      })
-    }
+    const tbody = document.getElementById('tbody')
+    tbody.insertAdjacentHTML(
+      "beforebegin",
+      `<tr class="tr--modify">
+        <td>${list[list.length - 1].description}</td>
+        <td>${list[list.length - 1].calories}</td>
+        <td>${list[list.length - 1].carbs}</td>
+        <td>${list[list.length - 1].protein}</td>
+        <td><button class="btn-delete">Eliminar</button></td>
+      </tr>`)
   }
 
   const removeStyleError = (e) => errorClass(e.target)
