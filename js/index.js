@@ -34,28 +34,28 @@
   const caloriesCounter = (position = '') => {
     const total = document.getElementById('total')
     if (typeof position === 'number') list.splice(position, 1)
-    const values = list.reduce((acc, cvalue, cindex) => {
-      if (cindex !== position) {
-        return {
-          calories: acc.calories += cvalue.calories,
-          carbs: acc.carbs += cvalue.carbs,
-          protein: acc.protein += cvalue.protein,
-        }
+    const values = list.reduce((acc, cvalue) => {
+      return {
+        calories: acc.calories += cvalue.calories,
+        carbs: acc.carbs += cvalue.carbs,
+        protein: acc.protein += cvalue.protein,
       }
     }, { calories: 0, carbs: 0, protein: 0 }) || { calories: 0, carbs: 0, protein: 0 }
     Object.values(values).forEach((item, index) => total.children[index + 1].textContent = item)
   }
   const printTableList = () => {
     const tbody = document.getElementById('tbody')
-    tbody.insertAdjacentHTML(
-      "beforebegin",
-      `<tr class="tr--modify">
-        <td>${list[list.length - 1].description}</td>
-        <td>${list[list.length - 1].calories}</td>
-        <td>${list[list.length - 1].carbs}</td>
-        <td>${list[list.length - 1].protein}</td>
-        <td><button class="btn-delete">Eliminar</button></td>
-      </tr>`)
+    tbody.innerHTML = ''
+    list.forEach((item, index) => {
+      tbody.innerHTML +=
+        `<tr class="tr--modify">
+        <td>${item.description}</td>
+        <td>${item.calories}</td>
+        <td>${item.carbs}</td>
+        <td>${item.protein}</td>
+        <td><button class="btn-delete" data-position=${index}>Eliminar</button></td>
+      </tr>`
+    });
     const buttonsDelete = document.getElementsByClassName('btn-delete')
     Object.values(buttonsDelete).forEach(element => {
       element.addEventListener('click', deleteProduct)
@@ -63,7 +63,8 @@
   }
   const deleteProduct = (e) => {
     e.target.parentElement.parentElement.remove()
-    caloriesCounter(Number(e.target.dataset.id))
+    caloriesCounter(Number(e.target.dataset.position))
+    printTableList()
   }
   const removeStyleError = (e) => errorClass(e.target)
   containerInputs.forEach(item => {
